@@ -1,7 +1,7 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class TokenStorage {
-  TokenStorage(this._storage);
+  TokenStorage({required this._storage});
 
   final FlutterSecureStorage _storage;
 

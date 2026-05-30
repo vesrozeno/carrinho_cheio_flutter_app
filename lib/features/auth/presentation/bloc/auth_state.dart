@@ -12,6 +12,8 @@ class AuthState {
   final UserEntity? user;
   final String? message;
 
+  bool get isAuthorized => user != null;
+
   factory AuthState.initial() {
     return const AuthState(
       status: AuthStatus.initial,

@@ -4,8 +4,7 @@ import '../storage/token_storage.dart';
 
 class AppBootstrap {
   static Future<void> initialize() async {
-    final token = await getIt<OAuthDatasource>().getToken();
-
+    final token = await getIt<OAuthDatasourceImpl>().getToken();
     await getIt<TokenStorage>().saveToken(token);
   }
 }

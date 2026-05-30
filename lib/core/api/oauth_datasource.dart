@@ -1,8 +1,8 @@
 import 'package:carrinho_cheio/core/config/app_config.dart';
 import 'package:dio/dio.dart';
 
-class OAuthDatasource {
-  OAuthDatasource({required this._dio});
+class OAuthDatasourceImpl {
+  OAuthDatasourceImpl({required this._dio});
 
   final Dio _dio;
 

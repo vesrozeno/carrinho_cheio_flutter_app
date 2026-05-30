@@ -1,10 +1,14 @@
 import 'package:carrinho_cheio/core/api/interceptors/auth_interceptor.dart';
+import 'package:carrinho_cheio/core/api/interceptors/logging_interceptor.dart';
 import 'package:dio/dio.dart';
 
 import '../config/app_config.dart';
 
 class ApiClient {
-  ApiClient({required this._authInterceptor}) {
+  ApiClient({
+    required AuthInterceptor authInterceptor,
+    required LoggingInterceptor loggingInterceptor,
+  }) {
     dio = Dio(
       BaseOptions(
         baseUrl: AppConfig.apiUrl,
@@ -13,9 +17,11 @@ class ApiClient {
       ),
     );
 
-    dio.interceptors.add(_authInterceptor);
+    dio.interceptors.addAll([
+      authInterceptor,
+      loggingInterceptor,
+    ]);
   }
 
   late final Dio dio;
-  final AuthInterceptor _authInterceptor;
 }

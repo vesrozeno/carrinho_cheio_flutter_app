@@ -2,7 +2,7 @@ import 'package:carrinho_cheio/core/storage/token_storage.dart';
 import 'package:dio/dio.dart';
 
 class AuthInterceptor extends Interceptor {
-  AuthInterceptor(this._tokenStorage);
+  AuthInterceptor({required this._tokenStorage});
 
   final TokenStorage _tokenStorage;
 

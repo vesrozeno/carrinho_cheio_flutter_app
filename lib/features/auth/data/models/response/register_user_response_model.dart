@@ -1,4 +1,4 @@
-import 'package:carrinho_cheio/features/auth/data/models/api_message_model.dart';
+import 'package:carrinho_cheio/core/models/api_message_model.dart';
 
 class RegisterResponseModel {
   const RegisterResponseModel({

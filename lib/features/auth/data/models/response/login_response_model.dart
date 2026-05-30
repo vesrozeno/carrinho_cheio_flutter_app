@@ -1,4 +1,4 @@
-import '../api_message_model.dart';
+import '../../../../../core/models/api_message_model.dart';
 import '../user_model.dart';
 
 class LoginResponseModel {
