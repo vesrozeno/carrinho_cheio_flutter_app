@@ -1,7 +1,7 @@
 sealed class AuthEvent {}
 
-class LoginRequested extends AuthEvent {
-  LoginRequested({
+class LoginEvent extends AuthEvent {
+  LoginEvent({
     required this.email,
     required this.password,
   });
@@ -10,8 +10,8 @@ class LoginRequested extends AuthEvent {
   final String password;
 }
 
-class RegisterRequested extends AuthEvent {
-  RegisterRequested({
+class RegisterUserEvent extends AuthEvent {
+  RegisterUserEvent({
     required this.name,
     required this.email,
     required this.password,
@@ -21,5 +21,3 @@ class RegisterRequested extends AuthEvent {
   final String email;
   final String password;
 }
-
-class LogoutRequested extends AuthEvent {}

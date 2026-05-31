@@ -34,7 +34,7 @@ class AuthDatasourceImpl implements AuthDatasource {
     required String email,
     required String password,
   }) async {
-    final RegisterUserRequestModel request = RegisterUserRequestModel(
+    final RegisterUserEventRequestModel request = RegisterUserEventRequestModel(
       name: name,
       email: email,
       password: password,

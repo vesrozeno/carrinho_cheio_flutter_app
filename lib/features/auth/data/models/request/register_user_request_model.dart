@@ -1,5 +1,5 @@
-class RegisterUserRequestModel {
-  const RegisterUserRequestModel({
+class RegisterUserEventRequestModel {
+  const RegisterUserEventRequestModel({
     required this.name,
     required this.email,
     required this.password,

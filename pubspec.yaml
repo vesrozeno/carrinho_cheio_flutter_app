@@ -1,5 +1,5 @@
 name: carrinho_cheio
-description: "A new Flutter project."
+description: "Seu app para criação de listas!"
 publish_to: "none"
 version: 0.1.0+1
 
@@ -27,3 +27,4 @@ flutter:
   uses-material-design: true
   assets:
     - .env
+    - assets/

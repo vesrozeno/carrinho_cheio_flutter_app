@@ -1,5 +1,9 @@
+import 'package:carrinho_cheio/core/navigator/app_navigator.dart';
 import 'package:carrinho_cheio/features/auth/domain/entities/user_entity.dart';
 import 'package:carrinho_cheio/features/auth/presentation/bloc/auth_status_enum.dart';
+import 'package:carrinho_cheio/features/auth/presentation/pages/login_page.dart';
+import 'package:carrinho_cheio/features/shopping_lists/presentation/pages/home_page.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../domain/repositories/auth_repository.dart';
@@ -10,15 +14,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc({
     required this._authRepository,
   }) : super(AuthState.initial()) {
-    on<LoginRequested>(_onLoginRequested);
-    on<RegisterRequested>(_onRegisterRequested);
-    on<LogoutRequested>(_onLogoutRequested);
+    on<LoginEvent>(_onLoginEvent);
+    on<RegisterUserEvent>(_onRegisterUserEvent);
   }
 
   final AuthRepository _authRepository;
 
-  Future<void> _onLoginRequested(
-    LoginRequested event,
+  Future<void> _onLoginEvent(
+    LoginEvent event,
     Emitter<AuthState> emit,
   ) async {
     emit(
@@ -39,6 +42,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           user: user,
         ),
       );
+      if (AppNavigator.context.mounted) {
+        ScaffoldMessenger.of(AppNavigator.context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Login realizado com sucesso',
+            ),
+          ),
+        );
+      }
+      AppNavigator.pushAndRemoveUntil(HomePage());
     } catch (e) {
       emit(
         AuthState(
@@ -49,8 +62,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
-  Future<void> _onRegisterRequested(
-    RegisterRequested event,
+  Future<void> _onRegisterUserEvent(
+    RegisterUserEvent event,
     Emitter<AuthState> emit,
   ) async {
     emit(
@@ -68,10 +81,21 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
       emit(
         AuthState(
-          status: AuthStatus.authenticated,
+          status: AuthStatus.registered,
           user: user,
         ),
       );
+
+      if (AppNavigator.context.mounted) {
+        ScaffoldMessenger.of(AppNavigator.context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Cadastro realizado com sucesso',
+            ),
+          ),
+        );
+      }
+      AppNavigator.pushAndRemoveUntil(LoginPage());
     } catch (e) {
       emit(
         AuthState(
@@ -80,17 +104,5 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         ),
       );
     }
-  }
-
-  Future<void> _onLogoutRequested(
-    LogoutRequested event,
-    Emitter<AuthState> emit,
-  ) async {
-    emit(
-      const AuthState(
-        status: AuthStatus.unauthenticated,
-        user: null,
-      ),
-    );
   }
 }

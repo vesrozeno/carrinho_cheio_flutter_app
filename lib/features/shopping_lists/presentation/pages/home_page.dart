@@ -1,10 +1,10 @@
-import 'package:carrinho_cheio/core/routes/app_router.dart';
-import 'package:carrinho_cheio/features/auth/presentation/bloc/auth_status_enum.dart';
+import 'package:carrinho_cheio/core/navigator/app_navigator.dart';
+import 'package:carrinho_cheio/core/widgets/custom_app_bar.dart';
 import 'package:carrinho_cheio/features/shopping_lists/presentation/bloc/shopping_lists.bloc.dart';
+import 'package:carrinho_cheio/features/shopping_lists/presentation/pages/shopping_list_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:carrinho_cheio/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:carrinho_cheio/features/auth/presentation/bloc/auth_event.dart';
 import 'package:carrinho_cheio/features/auth/presentation/bloc/auth_state.dart';
 import 'package:carrinho_cheio/features/shopping_lists/presentation/bloc/shopping_lists_state.dart';
 import 'package:carrinho_cheio/features/shopping_lists/presentation/bloc/shopping_lists_status_enum.dart';
@@ -41,10 +41,6 @@ class _HomePageState extends State<HomePage> {
         LoadShoppingListsRequested(),
       );
     }
-  }
-
-  void _logout() {
-    context.read<AuthBloc>().add(LogoutRequested());
   }
 
   void _openCreateListDialog(BuildContext context) {
@@ -108,27 +104,14 @@ class _HomePageState extends State<HomePage> {
     return BlocListener<AuthBloc, AuthState>(
       listenWhen: (previous, current) => previous.status != current.status,
       listener: (context, state) {
-        if (state.status == AuthStatus.unauthenticated) {
-          Navigator.of(context).pushNamedAndRemoveUntil(
-            AppRoutes.login,
-            (route) => false,
-          );
-        }
+        //TODO: bloc de lista e snack
       },
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
           onPressed: () => _openCreateListDialog(context),
           child: const Icon(Icons.add),
         ),
-        appBar: AppBar(
-          title: const Text('Minhas Listas'),
-          actions: [
-            IconButton(
-              onPressed: _logout,
-              icon: const Icon(Icons.logout),
-            ),
-          ],
-        ),
+        appBar: CustomAppBar(),
         body: BlocBuilder<ShoppingListsBloc, ShoppingListsState>(
           builder: (context, state) {
             switch (state.status) {
@@ -194,11 +177,7 @@ class _HomePageState extends State<HomePage> {
                           size: 16,
                         ),
                         onTap: () {
-                          Navigator.pushNamed(
-                            context,
-                            AppRoutes.shoppingListDetails,
-                            arguments: list,
-                          );
+                          AppNavigator.push(ShoppingListDetailsPage(list: list));
                         },
                       );
                     },
