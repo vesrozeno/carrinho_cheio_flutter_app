@@ -1,7 +1,7 @@
-import 'package:carrinho_cheio/features/shopping_lists/domain/entities/product_entity.dart';
+import 'package:carrinho_cheio/features/lists/domain/entities/product_entity.dart';
 
-class ShoppingListEntity {
-  const ShoppingListEntity({
+class ListEntity {
+  const ListEntity({
     required this.id,
     required this.current,
     required this.total,

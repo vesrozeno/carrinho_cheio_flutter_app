@@ -1,23 +1,24 @@
 import 'package:carrinho_cheio/core/navigator/app_navigator.dart';
 import 'package:carrinho_cheio/core/widgets/custom_app_bar.dart';
-import 'package:carrinho_cheio/features/shopping_lists/presentation/bloc/shopping_lists.bloc.dart';
-import 'package:carrinho_cheio/features/shopping_lists/presentation/pages/shopping_list_details.dart';
+import 'package:carrinho_cheio/core/widgets/custom_elevated_button.dart';
+import 'package:carrinho_cheio/features/lists/presentation/bloc/lists.bloc.dart';
+import 'package:carrinho_cheio/features/lists/presentation/pages/lists_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:carrinho_cheio/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:carrinho_cheio/features/auth/presentation/bloc/auth_state.dart';
-import 'package:carrinho_cheio/features/shopping_lists/presentation/bloc/shopping_lists_state.dart';
-import 'package:carrinho_cheio/features/shopping_lists/presentation/bloc/shopping_lists_status_enum.dart';
-import 'package:carrinho_cheio/features/shopping_lists/presentation/bloc/shopping_lists_event.dart';
+import 'package:carrinho_cheio/features/lists/presentation/bloc/lists_state.dart';
+import 'package:carrinho_cheio/features/lists/presentation/bloc/lists_status_enum.dart';
+import 'package:carrinho_cheio/features/lists/presentation/bloc/lists_event.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class ListsHomePage extends StatefulWidget {
+  const ListsHomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<ListsHomePage> createState() => _ListsHomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _ListsHomePageState extends State<ListsHomePage> {
   @override
   void initState() {
     super.initState();
@@ -26,8 +27,8 @@ class _HomePageState extends State<HomePage> {
     final userId = authState.user?.id;
 
     if (userId != null) {
-      context.read<ShoppingListsBloc>().add(
-        LoadShoppingListsRequested(),
+      context.read<ListsBloc>().add(
+        LoadListsRequested(),
       );
     }
   }
@@ -37,8 +38,8 @@ class _HomePageState extends State<HomePage> {
     final userId = authState.user?.id;
 
     if (userId != null) {
-      context.read<ShoppingListsBloc>().add(
-        LoadShoppingListsRequested(),
+      context.read<ListsBloc>().add(
+        LoadListsRequested(),
       );
     }
   }
@@ -62,9 +63,9 @@ class _HomePageState extends State<HomePage> {
               onPressed: () => Navigator.pop(context),
               child: const Text('Cancelar'),
             ),
-            BlocBuilder<ShoppingListsBloc, ShoppingListsState>(
+            BlocBuilder<ListsBloc, ListsState>(
               builder: (context, state) {
-                final isLoading = state.status == ShoppingListsStatus.loading;
+                final isLoading = state.status == ListsStatus.loading;
 
                 return ElevatedButton(
                   onPressed: isLoading
@@ -75,8 +76,8 @@ class _HomePageState extends State<HomePage> {
 
                           if (name.isEmpty || userId == null) return;
 
-                          context.read<ShoppingListsBloc>().add(
-                            CreateShoppingList(
+                          context.read<ListsBloc>().add(
+                            CreateList(
                               name: name,
                             ),
                           );
@@ -107,20 +108,23 @@ class _HomePageState extends State<HomePage> {
         //TODO: bloc de lista e snack
       },
       child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: () => _openCreateListDialog(context),
-          child: const Icon(Icons.add),
+        floatingActionButton: CustomElevatedButton(
+          onPressed: () {
+            _openCreateListDialog(context);
+          },
+          prefixIcon: Icons.add,
+          child: Text('Nova lista'),
         ),
         appBar: CustomAppBar(),
-        body: BlocBuilder<ShoppingListsBloc, ShoppingListsState>(
+        body: BlocBuilder<ListsBloc, ListsState>(
           builder: (context, state) {
             switch (state.status) {
-              case ShoppingListsStatus.loading:
+              case ListsStatus.loading:
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
 
-              case ShoppingListsStatus.error:
+              case ListsStatus.error:
                 return Center(
                   child: Padding(
                     padding: const EdgeInsets.all(16),
@@ -141,7 +145,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 );
 
-              case ShoppingListsStatus.success:
+              case ListsStatus.success:
                 final lists = state.lists ?? [];
 
                 if (lists.isEmpty) {
@@ -177,14 +181,14 @@ class _HomePageState extends State<HomePage> {
                           size: 16,
                         ),
                         onTap: () {
-                          AppNavigator.push(ShoppingListDetailsPage(list: list));
+                          AppNavigator.push(ListDetailsPage(list: list));
                         },
                       );
                     },
                   ),
                 );
 
-              case ShoppingListsStatus.initial:
+              case ListsStatus.initial:
                 return const SizedBox();
             }
           },

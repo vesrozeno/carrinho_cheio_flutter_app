@@ -1,21 +1,21 @@
 import 'package:carrinho_cheio/core/models/api_message_model.dart';
-import 'package:carrinho_cheio/features/shopping_lists/data/datasources/shopping_lists_datasource.dart';
-import 'package:carrinho_cheio/features/shopping_lists/data/models/request/add_product_request_model.dart';
-import 'package:carrinho_cheio/features/shopping_lists/data/models/request/check_product_request_model.dart';
-import 'package:carrinho_cheio/features/shopping_lists/data/models/request/create_list_request_model.dart';
-import 'package:carrinho_cheio/features/shopping_lists/data/models/request/get_lists_request_model.dart';
-import 'package:carrinho_cheio/features/shopping_lists/data/models/request/remove_product_request_model.dart';
+import 'package:carrinho_cheio/features/lists/data/datasources/lists_datasource.dart';
+import 'package:carrinho_cheio/features/lists/data/models/request/add_product_request_model.dart';
+import 'package:carrinho_cheio/features/lists/data/models/request/check_product_request_model.dart';
+import 'package:carrinho_cheio/features/lists/data/models/request/create_list_request_model.dart';
+import 'package:carrinho_cheio/features/lists/data/models/request/get_lists_request_model.dart';
+import 'package:carrinho_cheio/features/lists/data/models/request/remove_product_request_model.dart';
 
-import '../models/shopping_list_model.dart';
+import '../models/list_model.dart';
 import 'package:dio/dio.dart';
 
-class ShoppingListsDatasourceImpl implements ShoppingListsDatasource {
+class ListsDatasourceImpl implements ListsDatasource {
   final Dio _apiClientDio;
 
-  ShoppingListsDatasourceImpl({required this._apiClientDio});
+  ListsDatasourceImpl({required this._apiClientDio});
 
   @override
-  Future<List<ShoppingListModel>> getUserLists({required int userId}) async {
+  Future<List<ListModel>> getUserLists({required int userId}) async {
     final request = GetListsRequestModel(userId: userId);
     final response = await _apiClientDio.get(
       '/Listasusuario',
@@ -24,7 +24,7 @@ class ShoppingListsDatasourceImpl implements ShoppingListsDatasource {
 
     final List data = response.data['sdtListasUsuario'] ?? [];
 
-    return data.map((json) => ShoppingListModel.fromJson(json)).toList();
+    return data.map((json) => ListModel.fromJson(json)).toList();
   }
 
   @override
@@ -66,7 +66,10 @@ class ShoppingListsDatasourceImpl implements ShoppingListsDatasource {
     required int listId,
     required String productName,
   }) async {
-    final RemoveProductRequestModel request = RemoveProductRequestModel(listId: listId, productName: productName);
+    final RemoveProductRequestModel request = RemoveProductRequestModel(
+      listId: listId,
+      productName: productName,
+    );
 
     final response = await _apiClientDio.post(
       '/RemoveProdutoLista',
@@ -80,7 +83,11 @@ class ShoppingListsDatasourceImpl implements ShoppingListsDatasource {
 
   @override
   Future<ApiMessageModel> checkProduct({required int listId, required String productName, required bool isChecked}) async {
-    final CheckProductRequestModel request = CheckProductRequestModel(listId: listId, productName: productName, isChecked: isChecked ? 1 : 0);
+    final CheckProductRequestModel request = CheckProductRequestModel(
+      listId: listId,
+      productName: productName,
+      isChecked: isChecked ? 1 : 2,
+    );
 
     final response = await _apiClientDio.post(
       '/AlterarEstadoProduto',

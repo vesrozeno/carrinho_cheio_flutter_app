@@ -1,34 +1,34 @@
 import 'package:carrinho_cheio/core/models/api_message_model.dart';
 import 'package:carrinho_cheio/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../domain/repositories/shopping_lists_repository.dart';
-import 'shopping_lists_state.dart';
-import 'shopping_lists_status_enum.dart';
-import 'shopping_lists_event.dart';
+import '../../domain/repositories/lists_repository.dart';
+import 'lists_state.dart';
+import 'lists_status_enum.dart';
+import 'lists_event.dart';
 
-class ShoppingListsBloc extends Bloc<ShoppingListsEvent, ShoppingListsState> {
-  final ShoppingListsRepository _repository;
+class ListsBloc extends Bloc<ListsEvent, ListsState> {
+  final ListsRepository _repository;
   final AuthBloc _authBloc;
 
-  ShoppingListsBloc({required this._repository, required this._authBloc}) : super(ShoppingListsState.initial()) {
-    on<LoadShoppingListsRequested>(_onLoadLists);
-    on<CreateShoppingList>(_onCreateList);
+  ListsBloc({required this._repository, required this._authBloc}) : super(ListsState.initial()) {
+    on<LoadListsRequested>(_onLoadLists);
+    on<CreateList>(_onCreateList);
     on<AddProduct>(_onAddProduct);
     on<RemoveProduct>(_onRemoveProduct);
     on<CheckProduct>(_onCheckProduct);
   }
 
   Future<void> _onLoadLists(
-    LoadShoppingListsRequested event,
-    Emitter<ShoppingListsState> emit,
+    LoadListsRequested event,
+    Emitter<ListsState> emit,
   ) async {
-    emit(state.copyWith(status: ShoppingListsStatus.loading));
+    emit(state.copyWith(status: ListsStatus.loading));
 
     try {
       if (!_authBloc.state.isAuthorized) {
         emit(
           state.copyWith(
-            status: ShoppingListsStatus.error,
+            status: ListsStatus.error,
             message: 'Usuário não está logado',
           ),
         );
@@ -39,15 +39,15 @@ class ShoppingListsBloc extends Bloc<ShoppingListsEvent, ShoppingListsState> {
 
       emit(
         state.copyWith(
-          status: ShoppingListsStatus.success,
+          status: ListsStatus.success,
           lists: result,
-          message: null,
+          message: 'Listas carregadas',
         ),
       );
     } catch (e) {
       emit(
         state.copyWith(
-          status: ShoppingListsStatus.error,
+          status: ListsStatus.error,
           message: e.toString(),
         ),
       );
@@ -55,16 +55,16 @@ class ShoppingListsBloc extends Bloc<ShoppingListsEvent, ShoppingListsState> {
   }
 
   Future<void> _onCreateList(
-    CreateShoppingList event,
-    Emitter<ShoppingListsState> emit,
+    CreateList event,
+    Emitter<ListsState> emit,
   ) async {
-    emit(state.copyWith(status: ShoppingListsStatus.loading));
+    emit(state.copyWith(status: ListsStatus.loading));
 
     try {
       if (!_authBloc.state.isAuthorized) {
         emit(
           state.copyWith(
-            status: ShoppingListsStatus.error,
+            status: ListsStatus.error,
             message: 'Usuário não está logado',
           ),
         );
@@ -78,17 +78,17 @@ class ShoppingListsBloc extends Bloc<ShoppingListsEvent, ShoppingListsState> {
       if (response.isError) {
         emit(
           state.copyWith(
-            status: ShoppingListsStatus.error,
+            status: ListsStatus.error,
             message: response.description,
           ),
         );
       }
 
-      add(LoadShoppingListsRequested());
+      add(LoadListsRequested());
     } catch (e) {
       emit(
         state.copyWith(
-          status: ShoppingListsStatus.error,
+          status: ListsStatus.error,
           message: e.toString(),
         ),
       );
@@ -97,9 +97,9 @@ class ShoppingListsBloc extends Bloc<ShoppingListsEvent, ShoppingListsState> {
 
   Future<void> _onAddProduct(
     AddProduct event,
-    Emitter<ShoppingListsState> emit,
+    Emitter<ListsState> emit,
   ) async {
-    emit(state.copyWith(status: ShoppingListsStatus.loading));
+    emit(state.copyWith(status: ListsStatus.loading));
 
     try {
       final ApiMessageModel response = await _repository.addProduct(
@@ -110,16 +110,16 @@ class ShoppingListsBloc extends Bloc<ShoppingListsEvent, ShoppingListsState> {
       if (response.isError) {
         emit(
           state.copyWith(
-            status: ShoppingListsStatus.error,
+            status: ListsStatus.error,
             message: response.description,
           ),
         );
       }
-      add(LoadShoppingListsRequested());
+      add(LoadListsRequested());
     } catch (e) {
       emit(
         state.copyWith(
-          status: ShoppingListsStatus.error,
+          status: ListsStatus.error,
           message: e.toString(),
         ),
       );
@@ -128,9 +128,9 @@ class ShoppingListsBloc extends Bloc<ShoppingListsEvent, ShoppingListsState> {
 
   Future<void> _onRemoveProduct(
     RemoveProduct event,
-    Emitter<ShoppingListsState> emit,
+    Emitter<ListsState> emit,
   ) async {
-    emit(state.copyWith(status: ShoppingListsStatus.loading));
+    emit(state.copyWith(status: ListsStatus.loading));
 
     try {
       final ApiMessageModel response = await _repository.removeProduct(
@@ -141,16 +141,16 @@ class ShoppingListsBloc extends Bloc<ShoppingListsEvent, ShoppingListsState> {
       if (response.isError) {
         emit(
           state.copyWith(
-            status: ShoppingListsStatus.error,
+            status: ListsStatus.error,
             message: response.description,
           ),
         );
       }
-      add(LoadShoppingListsRequested());
+      add(LoadListsRequested());
     } catch (e) {
       emit(
         state.copyWith(
-          status: ShoppingListsStatus.error,
+          status: ListsStatus.error,
           message: e.toString(),
         ),
       );
@@ -159,9 +159,9 @@ class ShoppingListsBloc extends Bloc<ShoppingListsEvent, ShoppingListsState> {
 
   Future<void> _onCheckProduct(
     CheckProduct event,
-    Emitter<ShoppingListsState> emit,
+    Emitter<ListsState> emit,
   ) async {
-    emit(state.copyWith(status: ShoppingListsStatus.loading));
+    emit(state.copyWith(status: ListsStatus.loading));
 
     try {
       final ApiMessageModel response = await _repository.checkProduct(listId: event.listId, productName: event.productName, isChecked: event.isChecked);
@@ -169,16 +169,16 @@ class ShoppingListsBloc extends Bloc<ShoppingListsEvent, ShoppingListsState> {
       if (response.isError) {
         emit(
           state.copyWith(
-            status: ShoppingListsStatus.error,
+            status: ListsStatus.error,
             message: response.description,
           ),
         );
       }
-      add(LoadShoppingListsRequested());
+      add(LoadListsRequested());
     } catch (e) {
       emit(
         state.copyWith(
-          status: ShoppingListsStatus.error,
+          status: ListsStatus.error,
           message: e.toString(),
         ),
       );

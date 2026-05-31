@@ -1,8 +1,8 @@
-import '../../domain/entities/shopping_list_entity.dart';
+import '../../domain/entities/list_entity.dart';
 import 'product_model.dart';
 
-class ShoppingListModel extends ShoppingListEntity {
-  const ShoppingListModel({
+class ListModel extends ListEntity {
+  const ListModel({
     required super.id,
     required super.current,
     required super.total,
@@ -10,10 +10,10 @@ class ShoppingListModel extends ShoppingListEntity {
     required super.products,
   });
 
-  factory ShoppingListModel.fromJson(
+  factory ListModel.fromJson(
     Map<String, dynamic> json,
   ) {
-    return ShoppingListModel(
+    return ListModel(
       id: _parseInt(json['ListaId']),
       title: json['Titulo'] ?? '',
       current: _parseInt(json['atual']),
@@ -45,8 +45,8 @@ class ShoppingListModel extends ShoppingListEntity {
     };
   }
 
-  ShoppingListEntity toEntity() {
-    return ShoppingListEntity(
+  ListEntity toEntity() {
+    return ListEntity(
       id: id,
       title: title,
       current: current,

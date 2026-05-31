@@ -13,7 +13,7 @@ class ProductModel extends ProductEntity {
     return ProductModel(
       name: json['nome'] ?? '',
       category: json['categoria'] ?? '',
-      isChecked: (json['check'] ?? 0) == 1,
+      isChecked: (json['check'] ?? 2) == 1,
     );
   }
 
@@ -21,7 +21,7 @@ class ProductModel extends ProductEntity {
     return {
       'nome': name,
       'categoria': category,
-      'check': isChecked ? 1 : 0,
+      'check': isChecked ? 1 : 2,
     };
   }
 }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ThemeController {
   ThemeController._();
 
-  static final ValueNotifier<ThemeMode> themeMode = ValueNotifier(ThemeMode.system);
+  static final ValueNotifier<ThemeMode> themeMode = ValueNotifier(ThemeMode.light);
 
   static ThemeMode initialTheme(BuildContext context) {
     final brightness = MediaQuery.of(context).platformBrightness;

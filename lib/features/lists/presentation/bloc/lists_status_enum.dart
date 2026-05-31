@@ -1,4 +1,4 @@
-enum ShoppingListsStatus {
+enum ListsStatus {
   initial,
   loading,
   success,

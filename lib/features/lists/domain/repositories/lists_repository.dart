@@ -1,9 +1,9 @@
 import 'package:carrinho_cheio/core/models/api_message_model.dart';
 
-import '../models/shopping_list_model.dart';
+import '../entities/list_entity.dart';
 
-abstract interface class ShoppingListsDatasource {
-  Future<List<ShoppingListModel>> getUserLists({required int userId});
+abstract class ListsRepository {
+  Future<List<ListEntity>> getUserLists({required int userId});
   Future<ApiMessageModel> createList({required int userId, required String listName});
   Future<ApiMessageModel> addProduct({required int listId, required String productName});
   Future<ApiMessageModel> removeProduct({required int listId, required String productName});

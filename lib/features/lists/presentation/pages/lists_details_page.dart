@@ -1,22 +1,22 @@
-import 'package:carrinho_cheio/features/shopping_lists/presentation/bloc/shopping_lists.bloc.dart';
-import 'package:carrinho_cheio/features/shopping_lists/presentation/bloc/shopping_lists_event.dart';
+import 'package:carrinho_cheio/features/lists/presentation/bloc/lists.bloc.dart';
+import 'package:carrinho_cheio/features/lists/presentation/bloc/lists_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../domain/entities/shopping_list_entity.dart';
+import '../../domain/entities/list_entity.dart';
 
-class ShoppingListDetailsPage extends StatefulWidget {
-  const ShoppingListDetailsPage({
+class ListDetailsPage extends StatefulWidget {
+  const ListDetailsPage({
     super.key,
     required this.list,
   });
 
-  final ShoppingListEntity list;
+  final ListEntity list;
 
   @override
-  State<ShoppingListDetailsPage> createState() => _ShoppingListDetailsPageState();
+  State<ListDetailsPage> createState() => _ListDetailsPageState();
 }
 
-class _ShoppingListDetailsPageState extends State<ShoppingListDetailsPage> {
+class _ListDetailsPageState extends State<ListDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +43,7 @@ class _ShoppingListDetailsPageState extends State<ShoppingListDetailsPage> {
                   leading: Checkbox(
                     value: product.isChecked,
                     onChanged: (value) {
-                      context.read<ShoppingListsBloc>().add(
+                      context.read<ListsBloc>().add(
                         CheckProduct(
                           listId: widget.list.id,
                           productName: product.name,
@@ -56,7 +56,7 @@ class _ShoppingListDetailsPageState extends State<ShoppingListDetailsPage> {
                   trailing: IconButton(
                     icon: const Icon(Icons.delete),
                     onPressed: () {
-                      context.read<ShoppingListsBloc>().add(
+                      context.read<ListsBloc>().add(
                         RemoveProduct(
                           listId: widget.list.id,
                           productName: product.name,
@@ -102,7 +102,7 @@ class _ShoppingListDetailsPageState extends State<ShoppingListDetailsPage> {
 
                 if (name.isEmpty) return;
 
-                context.read<ShoppingListsBloc>().add(
+                context.read<ListsBloc>().add(
                   AddProduct(
                     listId: widget.list.id,
                     productName: name,

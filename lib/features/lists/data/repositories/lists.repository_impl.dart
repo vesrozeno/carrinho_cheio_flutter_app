@@ -1,18 +1,18 @@
 import 'package:carrinho_cheio/core/models/api_message_model.dart';
 
-import '../../domain/entities/shopping_list_entity.dart';
-import '../../domain/repositories/shopping_lists_repository.dart';
-import '../datasources/shopping_lists_datasource.dart';
-import '../models/shopping_list_model.dart';
+import '../../domain/entities/list_entity.dart';
+import '../../domain/repositories/lists_repository.dart';
+import '../datasources/lists_datasource.dart';
+import '../models/list_model.dart';
 
-class ShoppingListsRepositoryImpl implements ShoppingListsRepository {
-  final ShoppingListsDatasource _datasource;
+class ListsRepositoryImpl implements ListsRepository {
+  final ListsDatasource _datasource;
 
-  ShoppingListsRepositoryImpl({required this._datasource});
+  ListsRepositoryImpl({required this._datasource});
 
   @override
-  Future<List<ShoppingListEntity>> getUserLists({required int userId}) async {
-    final List<ShoppingListModel> result = await _datasource.getUserLists(userId: userId);
+  Future<List<ListEntity>> getUserLists({required int userId}) async {
+    final List<ListModel> result = await _datasource.getUserLists(userId: userId);
 
     return result.map((e) => e.toEntity()).toList();
   }

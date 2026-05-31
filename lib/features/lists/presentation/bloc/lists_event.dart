@@ -1,18 +1,18 @@
-abstract class ShoppingListsEvent {}
+abstract class ListsEvent {}
 
-class LoadShoppingListsRequested extends ShoppingListsEvent {
-  LoadShoppingListsRequested();
+class LoadListsRequested extends ListsEvent {
+  LoadListsRequested();
 }
 
-class CreateShoppingList extends ShoppingListsEvent {
+class CreateList extends ListsEvent {
   final String name;
 
-  CreateShoppingList({
+  CreateList({
     required this.name,
   });
 }
 
-class AddProduct extends ShoppingListsEvent {
+class AddProduct extends ListsEvent {
   final int listId;
   final String productName;
 
@@ -22,7 +22,7 @@ class AddProduct extends ShoppingListsEvent {
   });
 }
 
-class RemoveProduct extends ShoppingListsEvent {
+class RemoveProduct extends ListsEvent {
   final int listId;
   final String productName;
 
@@ -32,7 +32,7 @@ class RemoveProduct extends ShoppingListsEvent {
   });
 }
 
-class CheckProduct extends ShoppingListsEvent {
+class CheckProduct extends ListsEvent {
   final int listId;
   final String productName;
   final bool isChecked;

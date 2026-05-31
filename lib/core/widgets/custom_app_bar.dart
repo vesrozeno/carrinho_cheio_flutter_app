@@ -1,8 +1,8 @@
 import 'package:carrinho_cheio/core/theme/app_colors.dart';
+import 'package:carrinho_cheio/core/theme/theme_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:carrinho_cheio/core/navigator/app_navigator.dart';
-import 'package:carrinho_cheio/core/theme/theme_controller.dart';
-import 'package:carrinho_cheio/core/utils/screen_size.dart';
 import 'package:carrinho_cheio/features/auth/presentation/pages/login_page.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -18,7 +18,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       flexibleSpace: SafeArea(
         child: Center(
           child: Padding(
-            padding: EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
               horizontal: 15,
             ),
             child: Row(
@@ -30,13 +30,17 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
                 const Spacer(),
 
-                IconButton(
-                  onPressed: ThemeController.toggleTheme,
-                  icon: ThemeController.isDarkMode ? const Icon(Icons.light_mode_outlined) : const Icon(Icons.dark_mode_outlined),
-                  color: AppColors.white,
+                BlocBuilder<ThemeCubit, ThemeMode>(
+                  builder: (context, themeMode) {
+                    return IconButton(
+                      onPressed: () => context.read<ThemeCubit>().toggleTheme(),
+                      icon: themeMode == ThemeMode.dark ? const Icon(Icons.light_mode_outlined) : const Icon(Icons.dark_mode_outlined),
+                      color: AppColors.white,
+                    );
+                  },
                 ),
 
-                SizedBox(width: 40),
+                const SizedBox(width: 40),
 
                 IconButton(
                   onPressed: () {
