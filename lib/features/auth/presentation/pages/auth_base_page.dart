@@ -23,7 +23,7 @@ class AuthBasePage extends StatefulWidget {
     required this.buttonText,
     required this.bottomText,
     required this.bottomActionText,
-    required this.mainContext,
+    required this.mainContent,
     required this.onButtonPressed,
     required this.onActionTextPressed,
   });
@@ -32,7 +32,7 @@ class AuthBasePage extends StatefulWidget {
   final String buttonText;
   final String bottomText;
   final String bottomActionText;
-  final Widget mainContext;
+  final Widget mainContent;
   final VoidCallback? onButtonPressed;
   final VoidCallback? onActionTextPressed;
 
@@ -143,7 +143,7 @@ class _AuthBasePageState extends State<AuthBasePage> {
                                               maxLines: 2,
                                               overflow: TextOverflow.ellipsis,
                                             ),
-                                            widget.mainContext,
+                                            widget.mainContent,
                                             CustomElevatedButton(
                                               onPressed: widget.onButtonPressed,
                                               isLoading: isLoading,

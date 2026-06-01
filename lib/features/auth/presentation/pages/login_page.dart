@@ -56,7 +56,7 @@ class _LoginPageState extends State<LoginPage> {
       buttonText: 'Entrar',
       bottomText: 'Ainda não tem conta?',
       bottomActionText: 'Criar',
-      mainContext: Form(
+      mainContent: Form(
         key: _formKey,
         child: Column(
           spacing: 15,

@@ -62,7 +62,7 @@ class _RegisterPageState extends State<RegisterPage> {
       buttonText: 'Cadastrar',
       bottomText: 'Já tem uma conta?',
       bottomActionText: 'Entrar',
-      mainContext: Form(
+      mainContent: Form(
         key: _formKey,
         child: Column(
           spacing: 15,
