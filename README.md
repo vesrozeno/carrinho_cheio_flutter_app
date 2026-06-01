@@ -12,29 +12,29 @@
 
 </p>
 
-Aplicativo mobile desenvolvido em Flutter para criação e gerenciamento de listas de compras. Permite autenticação de usuários, criação de listas, adição e remoção de produtos, marcação de itens comprados e persistência via API REST.
+Mobile application developed with Flutter for creating and managing shopping lists. It allows user authentication, list creation, product addition and removal, marking purchased items, and data persistence through a REST API.
 
-**API utilizada:**
+**API used:**
 [https://listadella.azurewebsites.net/apiListadella_desafio.yaml/swagger/index.html](https://listadella.azurewebsites.net/apiListadella_desafio.yaml/swagger/index.html)
 
 ---
 
-# 📚 Sumário
+# 📚 Table of Contents
 
 - [Screenshots](#-screenshots)
-- [Arquitetura do projeto](#-arquitetura-do-projeto)
-- [Injeção de dependências](#-injeção-de-dependências)
-- [Abordagem de Front-end](#-abordagem-de-front-end)
+- [Project Architecture](#-project-architecture)
+- [Dependency Injection](#-dependency-injection)
+- [Front-end Approach](#-front-end-approach)
 - [API](#-api)
-- [Como executar o projeto](#-como-executar-o-projeto)
-- [Melhorias possíveis](#-melhorias-possíveis)
-- [Observações](#-observações)
+- [How to Run the Project](#-how-to-run-the-project)
+- [Possible Improvements](#-possible-improvements)
+- [Notes](#-notes)
 
 ---
 
 # 📸 Screenshots
 
-## Login e Home
+## Login and Home
 
 <div style="display: flex; gap: 12px;">
   <img src="screenshots/login.png" width="150"/>
@@ -44,7 +44,7 @@ Aplicativo mobile desenvolvido em Flutter para criação e gerenciamento de list
   <img src="screenshots/home.png" width="150"/>
 </div>
 
-## Listas
+## Lists
 
 <div style="display: flex; gap: 12px;">
   <img src="screenshots/empty_list_detail.png" width="150"/>
@@ -63,97 +63,97 @@ Aplicativo mobile desenvolvido em Flutter para criação e gerenciamento de list
 
 ---
 
-# 🧠 Arquitetura do projeto
+# 🧠 Project Architecture
 
-O projeto segue uma arquitetura **feature-first combinada com Clean Architecture simplificada**, separando responsabilidades em camadas:
+The project follows a **feature-first architecture combined with a simplified Clean Architecture**, separating responsibilities into layers:
 
 - Presentation (UI + BLoC)
-- Domain (Entities + Contracts de Repository)
-- Data (Repositories implementados + DataSources)
-- External (API / HTTP client)
+- Domain (Entities + Repository Contracts)
+- Data (Implemented Repositories + Data Sources)
+- External (API / HTTP Client)
 
 ---
 
-## Fluxo de dados
+## Data Flow
 
 ```
 UI (Widgets)
    ↓
 BLoC (State Management)
    ↓
-Repository (Abstração de dados)
+Repository (Data Abstraction)
    ↓
-Data Source (Implementação da API)
+Data Source (API Implementation)
    ↓
 REST API
 ```
 
 ---
 
-## Camadas do projeto
+## Project Layers
 
 ### Presentation
 
-Responsável pela camada de interface e interação com o usuário.
+Responsible for the user interface and user interaction layer.
 
-Contém:
+Contains:
 
-- Widgets reutilizáveis
-- Páginas
-- BLoCs (gerenciamento de estado)
-- Estados e eventos
+- Reusable widgets
+- Pages
+- BLoCs (state management)
+- States and events
 
-Responsabilidades:
+Responsibilities:
 
-- Interação com o usuário
-- Exibição de estados (loading, error, success)
-- Disparo de eventos para a camada de negócio
+- User interaction
+- State rendering (loading, error, success)
+- Triggering events to the business layer
 
 ---
 
 ### Domain
 
-Responsável pelas regras de negócio da aplicação.
+Responsible for the application's business rules.
 
-Contém:
+Contains:
 
-- Entities (modelos de negócio)
-- Contratos de Repository (abstrações)
+- Entities (business models)
+- Repository contracts (abstractions)
 
-Responsabilidades:
+Responsibilities:
 
-- Definição das regras de negócio
-- Independência de frameworks e implementação
+- Business rule definitions
+- Independence from frameworks and implementations
 
 ---
 
 ### Data
 
-Responsável pelo acesso e manipulação de dados.
+Responsible for data access and manipulation.
 
-Contém:
+Contains:
 
 - Models (DTOs)
-- Implementação dos repositories
+- Repository implementations
 - Data sources (API calls)
 
-Responsabilidades:
+Responsibilities:
 
-- Conversão JSON ↔ Models
-- Comunicação com API externa
+- JSON ↔ Model conversion
+- Communication with external APIs
 
 ---
 
-# 🧩 Injeção de dependências
+# 🧩 Dependency Injection
 
-O projeto utiliza **GetIt** para injeção de dependências.
+The project uses **GetIt** for dependency injection.
 
-Responsável por:
+Responsible for:
 
-- Registrar repositories, datasources e serviços
-- Fornecer instâncias globais desacopladas
+- Registering repositories, data sources, and services
+- Providing globally accessible decoupled instances
 
-Exemplo:
+Example:
 
 ```dart
 final authRepository = getIt<AuthRepository>();
@@ -161,75 +161,75 @@ final authRepository = getIt<AuthRepository>();
 
 ---
 
-# 🎨 Abordagem de Front-end
+# 🎨 Front-end Approach
 
-## Design da interface
+## Interface Design
 
-O design foi baseado em um [protótipo no Figma](https://www.figma.com/design/nt6gowvqTt5GPyUUuSDWYL/Carrinho-Cheio?node-id=4-373&t=DD1xvSyM6qxOoHGz-1), com inspiração em marcas de supermercados, utilizando tons vermelhos. O projeto também conta com **modo dark**.
-
----
-
-## Componentização
-
-- Componentes reutilizáveis (`CustomTextField`, `CustomElevatedButton`, `Toast`, `GenericDialog`)
-- Base de páginas genéricas (`AuthBasePage`)
-- Redução de duplicação de código
-- Padronização visual e comportamental
+The design was based on a Figma prototype, inspired by supermarket brands and using red color tones. The project also includes **dark mode**.
 
 ---
 
-## Feedback visual (UX)
+## Componentization
 
-O aplicativo utiliza feedback baseado no estado da aplicação:
-
-- Success → Toast de sucesso
-- Error → Toast de erro
-- Loading → bloqueio de ações e indicadores visuais
-- Empty State → mensagens informativas quando não há dados
+- Reusable components (`CustomTextField`, `CustomElevatedButton`, `Toast`, `GenericDialog`)
+- Generic page base (`AuthBasePage`)
+- Reduced code duplication
+- Visual and behavioral standardization
 
 ---
 
-## Gerenciamento de estado
+## Visual Feedback (UX)
+
+The application provides feedback based on the current state:
+
+- Success → Success toast
+- Error → Error toast
+- Loading → Action blocking and loading indicators
+- Empty State → Informative messages when no data is available
+
+---
+
+## State Management
 
 - BLoC (flutter_bloc)
-- Estados reativos
+- Reactive states
 
 ---
 
 # 🌐 API
 
-Integração com API REST responsável pela persistência de dados:
+REST API integration responsible for data persistence:
 
-- Autenticação de usuários
-- Listas de compras
-- Produtos
+- User authentication
+- Shopping lists
+- Products
 
 ---
 
-# 🚀 Como executar o projeto
+# 🚀 How to Run the Project
 
-## Pré-requisitos
+## Prerequisites
 
-- Flutter SDK instalado
-- Dart configurado
-- Emulador ou dispositivo físico
+- Flutter SDK installed
+- Dart configured
+- Emulator or physical device
 - Flutter 3.44.0
 
 ---
 
-## Configuração do ambiente
+## Environment Setup
 
-Criar o arquivo `.env` baseado no `.env.example`:
+Create the `.env` file based on `.env.example`:
 
 ```bash
 cp .env.example .env
 ```
 
-Preencher as variáveis necessárias (URL da API, Auth URL etc).
+Fill in the required variables (API URL, Auth URL, etc.).
 
 ---
 
-## Executar o projeto
+## Run the Project
 
 ```bash
 flutter pub get
@@ -238,15 +238,15 @@ flutter run
 
 ---
 
-# 🖥️ Suporte a Desktop
+# 🖥️ Desktop Support
 
-O projeto também suporta execução em Windows.
+The project also supports running on Windows.
 
-## Pré-requisitos
+## Prerequisites
 
-- Visual Studio com pacote de desenvolvimento desktop instalado
+- Visual Studio with the Desktop Development package installed
 
-## Executar:
+## Run:
 
 ```bash
 flutter run -d windows
@@ -254,36 +254,36 @@ flutter run -d windows
 
 ---
 
-# 🚧 Melhorias possíveis
+# 🚧 Possible Improvements
 
-## Autenticação (Token)
+## Authentication (Token)
 
-- O token possui expiração de 1 hora
-- Não foi implementado refresh token ou validação automática de expiração devido à proposta simples do projeto
+- The token expires after 1 hour
+- Refresh token handling and automatic expiration validation were not implemented due to the project's simple scope
 
 ---
 
-## Conectividade
+## Connectivity
 
-- Não há verificação de conexão com internet
-- Melhorias futuras:
-  - Detecção de offline antes das requests
-  - Exibição de estado offline na UI
-  - Bloqueio de ações sem conectividade
+- No internet connectivity check is implemented
+- Future improvements:
+  - Offline detection before requests
+  - Offline state indication in the UI
+  - Blocking actions when offline
 
 ---
 
 ## Design / UI
 
-- Baseado em protótipo no Figma
-- Algumas adaptações foram feitas por decisões técnicas e de UX
-- Melhorias futuras:
-  - Maior fidelidade ao design original (pixel perfect)
-  - Animações entre estados
+- Based on a Figma prototype
+- Some adaptations were made due to technical and UX decisions
+- Future improvements:
+  - Greater fidelity to the original design (pixel perfect)
+  - State transition animations
 
 ---
 
-# 📌 Observações
+# 📌 Notes
 
-O endpoint `LogInUsuario` pode retornar `UsuarioNome` vazio em alguns cenários (ex: apenas primeiro nome sem sobrenome).
-O identificador principal utilizado no aplicativo é o `UsuarioId`.
+The `LogInUsuario` endpoint may return an empty `UsuarioNome` in some scenarios (e.g., only a first name without a surname).
+The primary identifier used by the application is `UsuarioId`.
