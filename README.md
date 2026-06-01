@@ -1,28 +1,40 @@
 # 📱 Carrinho Cheio
 
+<p align="center">
+
+![Flutter](https://img.shields.io/badge/Flutter-3.44.0-blue?logo=flutter)
+![Dart](https://img.shields.io/badge/Dart-language-0175C2?logo=dart)
+![BLoC](https://img.shields.io/badge/State-BLoC-purple)
+![Clean Architecture](https://img.shields.io/badge/Architecture-Clean%20Architecture-brightgreen)
+![GetIt](https://img.shields.io/badge/DI-GetIt-orange)
+![REST API](https://img.shields.io/badge/API-REST-red)
+![Platform](https://img.shields.io/badge/Platform-Android%20%7C%20Windows-lightgrey)
+
+</p>
+
 Aplicativo mobile desenvolvido em Flutter para criação e gerenciamento de listas de compras. Permite autenticação de usuários, criação de listas, adição e remoção de produtos, marcação de itens comprados e persistência via API REST.
 
-API utilizada:
+**API utilizada:**
 [https://listadella.azurewebsites.net/apiListadella_desafio.yaml/swagger/index.html](https://listadella.azurewebsites.net/apiListadella_desafio.yaml/swagger/index.html)
 
 ---
 
 # 📚 Sumário
 
-- [📸 Screenshots](#-screenshots)
-- [🧠 Arquitetura do projeto](#-arquitetura-do-projeto)
-- [🧩 Injeção de dependências](#-injeção-de-dependências)
-- [🎨 Abordagem de Front-end](#-abordagem-de-front-end)
-- [🌐 API](#-api)
-- [🚀 Como executar o projeto](#-como-executar-o-projeto)
-- [🚧 Melhorias possíveis](#-melhorias-possíveis)
-- [📌 Observações](#-observações)
+- [Screenshots](#-screenshots)
+- [Arquitetura do projeto](#-arquitetura-do-projeto)
+- [Injeção de dependências](#-injeção-de-dependências)
+- [Abordagem de Front-end](#-abordagem-de-front-end)
+- [API](#-api)
+- [Como executar o projeto](#-como-executar-o-projeto)
+- [Melhorias possíveis](#-melhorias-possíveis)
+- [Observações](#-observações)
 
 ---
 
 # 📸 Screenshots
 
-## 🔐 Login e Home
+## Login e Home
 
 <div style="display: flex; gap: 12px;">
   <img src="screenshots/login.png" width="150"/>
@@ -32,7 +44,7 @@ API utilizada:
   <img src="screenshots/home.png" width="150"/>
 </div>
 
-## 📋 Listas
+## Listas
 
 <div style="display: flex; gap: 12px;">
   <img src="screenshots/empty_list_detail.png" width="150"/>
@@ -41,7 +53,7 @@ API utilizada:
   <img src="screenshots/list_detail_checked.png" width="150"/>
 </div>
 
-## 🌙 Dark Mode
+## Dark Mode
 
 <div style="display: flex; gap: 12px;">
   <img src="screenshots/login_dark_mode.png" width="150"/>
@@ -53,69 +65,81 @@ API utilizada:
 
 # 🧠 Arquitetura do projeto
 
-O projeto segue uma arquitetura **feature-first + Clean Architecture simplificada**, separando responsabilidades em camadas:
+O projeto segue uma arquitetura **feature-first combinada com Clean Architecture simplificada**, separando responsabilidades em camadas:
 
 - Presentation (UI + BLoC)
-- Domain (Entities + Repositories abstratos)
+- Domain (Entities + Contracts de Repository)
 - Data (Repositories implementados + DataSources)
 - External (API / HTTP client)
 
 ---
 
-## 🔄 Fluxo de dados
+## Fluxo de dados
 
 ```
 UI (Widgets)
-   ⬇️
+   ↓
 BLoC (State Management)
-   ⬇️
+   ↓
 Repository (Abstração de dados)
-   ⬇️
+   ↓
 Data Source (Implementação da API)
-   ⬇️
+   ↓
 REST API
 ```
 
 ---
 
-## 🧱 Camadas do projeto
+## Camadas do projeto
 
-### 📌 Presentation
+### Presentation
+
+Responsável pela camada de interface e interação com o usuário.
+
+Contém:
 
 - Widgets reutilizáveis
 - Páginas
 - BLoCs (gerenciamento de estado)
 - Estados e eventos
 
-Responsável por:
+Responsabilidades:
 
-- Interação com usuário
+- Interação com o usuário
 - Exibição de estados (loading, error, success)
-- Disparo de eventos para o BLoC
+- Disparo de eventos para a camada de negócio
 
 ---
 
-### 📌 Domain
+### Domain
+
+Responsável pelas regras de negócio da aplicação.
+
+Contém:
 
 - Entities (modelos de negócio)
-- Contracts de Repository
+- Contratos de Repository (abstrações)
 
-Responsável por:
+Responsabilidades:
 
-- Regras de negócio da aplicação
-- Definição de contratos independentes de implementação
+- Definição das regras de negócio
+- Independência de frameworks e implementação
 
 ---
 
-### 📌 Data
+### Data
+
+Responsável pelo acesso e manipulação de dados.
+
+Contém:
 
 - Models (DTOs)
 - Implementação dos repositories
 - Data sources (API calls)
 
-Responsável por:
+Responsabilidades:
 
-- Conversão de JSON ↔ Models
+- Conversão JSON ↔ Models
 - Comunicação com API externa
 
 ---
@@ -124,12 +148,12 @@ Responsável por:
 
 O projeto utiliza **GetIt** para injeção de dependências.
 
-Ele é responsável por:
+Responsável por:
 
-- Registrar repositories, datasources e services
+- Registrar repositories, datasources e serviços
 - Fornecer instâncias globais desacopladas
 
-Exemplo de uso:
+Exemplo:
 
 ```dart
 final authRepository = getIt<AuthRepository>();
@@ -139,24 +163,24 @@ final authRepository = getIt<AuthRepository>();
 
 # 🎨 Abordagem de Front-end
 
-## 🖼️ Design da interface
+## Design da interface
 
-Foi criado um [protótipo no Figma](https://www.figma.com/design/nt6gowvqTt5GPyUUuSDWYL/Carrinho-Cheio?node-id=0-1&t=UvlobzF1IUrlkprK-1), inspirado em interfaces de supermercados com predominância de tons vermelhos. Também foi desenvolvido um **modo dark**.
+O design foi baseado em um [protótipo no Figma](https://www.figma.com/design/nt6gowvqTt5GPyUUuSDWYL/Carrinho-Cheio?node-id=4-373&t=DD1xvSyM6qxOoHGz-1), com inspiração em marcas de supermercados, utilizando tons vermelhos. O projeto também conta com **modo dark**.
 
 ---
 
-## 🧩 Componentização
+## Componentização
 
-- Componentes reutilizáveis (ex: `CustomTextField`, `CustomElevatedButton`, `Toast`, `GenericDialog`)
-- Base de páginas genéricas (ex: `AuthBasePage`)
+- Componentes reutilizáveis (`CustomTextField`, `CustomElevatedButton`, `Toast`, `GenericDialog`)
+- Base de páginas genéricas (`AuthBasePage`)
 - Redução de duplicação de código
 - Padronização visual e comportamental
 
 ---
 
-## 🔔 Feedback visual (UX)
+## Feedback visual (UX)
 
-O app utiliza feedback baseado no estado da aplicação:
+O aplicativo utiliza feedback baseado no estado da aplicação:
 
 - Success → Toast de sucesso
 - Error → Toast de erro
@@ -165,7 +189,7 @@ O app utiliza feedback baseado no estado da aplicação:
 
 ---
 
-## ⚙️ Gerenciamento de estado
+## Gerenciamento de estado
 
 - BLoC (flutter_bloc)
 - Estados reativos
@@ -174,7 +198,7 @@ O app utiliza feedback baseado no estado da aplicação:
 
 # 🌐 API
 
-Integração com API REST para persistência de dados:
+Integração com API REST responsável pela persistência de dados:
 
 - Autenticação de usuários
 - Listas de compras
@@ -184,28 +208,28 @@ Integração com API REST para persistência de dados:
 
 # 🚀 Como executar o projeto
 
-## 📦 Pré-requisitos
+## Pré-requisitos
 
 - Flutter SDK instalado
 - Dart configurado
 - Emulador ou dispositivo físico
-- Versão utilizada - Flutter 3.44.0
+- Flutter 3.44.0
 
 ---
 
-## ⚙️ Configuração do ambiente
+## Configuração do ambiente
 
-Crie o arquivo `.env` baseado no `.env.example`:
+Criar o arquivo `.env` baseado no `.env.example`:
 
 ```bash
 cp .env.example .env
 ```
 
-Preencha as variáveis necessárias (ex: URL da API, Auth URL, etc).
+Preencher as variáveis necessárias (URL da API, Auth URL etc).
 
 ---
 
-## ▶️ Executar o projeto
+## Executar o projeto
 
 ```bash
 flutter pub get
@@ -214,17 +238,15 @@ flutter run
 
 ---
 
-## 🖥️ Suporte a Desktop
+# 🖥️ Suporte a Desktop
 
-O projeto também suporta execução em:
+O projeto também suporta execução em Windows.
 
-- Windows 💻
+## Pré-requisitos
 
-### Pré-requisitos:
+- Visual Studio com pacote de desenvolvimento desktop instalado
 
-- Visual Studio com pacote de desenvolvimento para aplicações desktop
-
-Executar no Windows:
+## Executar:
 
 ```bash
 flutter run -d windows
@@ -234,31 +256,34 @@ flutter run -d windows
 
 # 🚧 Melhorias possíveis
 
-## 🔐 Autenticação (Token)
+## Autenticação (Token)
 
 - O token possui expiração de 1 hora
-- Como o projeto tem proposta simples, não foi implementado um sistema de refresh token ou validação automática de expiração
+- Não foi implementado refresh token ou validação automática de expiração devido à proposta simples do projeto
 
 ---
 
-## 🌐 Conectividade
+## Conectividade
 
-- Não há verificação contínua de conexão com internet
-- Em melhorias futuras, seria interessante:
-  - detectar ausência de conexão antes das requests
-  - exibir estado offline na interface
-  - bloquear ações que dependem da API quando offline
-
----
-
-## 🎨 Design / UI
-
-- O design foi baseado em um protótipo no Figma
-- Algumas telas foram adaptadas durante o desenvolvimento por limitações técnicas e decisões de UX
+- Não há verificação de conexão com internet
 - Melhorias futuras:
-  - maior fidelidade pixel-perfect ao protótipo
-  - adição de animações entre estados
+  - Detecção de offline antes das requests
+  - Exibição de estado offline na UI
+  - Bloqueio de ações sem conectividade
+
+---
+
+## Design / UI
+
+- Baseado em protótipo no Figma
+- Algumas adaptações foram feitas por decisões técnicas e de UX
+- Melhorias futuras:
+  - Maior fidelidade ao design original (pixel perfect)
+  - Animações entre estados
+
+---
 
 # 📌 Observações
 
-O endpoint LogInUsuario retorna UsuarioNome vazio em alguns cenários (ex: apenas primeiro nome, sem espaço e sobrenome)
+O endpoint `LogInUsuario` pode retornar `UsuarioNome` vazio em alguns cenários (ex: apenas primeiro nome sem sobrenome).
+O identificador principal utilizado no aplicativo é o `UsuarioId`.
