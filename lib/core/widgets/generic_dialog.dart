@@ -77,6 +77,7 @@ class _GenericDialogState extends State<GenericDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       titlePadding: const EdgeInsets.fromLTRB(24, 20, 12, 0),
+      insetPadding: const EdgeInsets.symmetric(horizontal: 15),
       contentPadding: const EdgeInsets.all(15),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
