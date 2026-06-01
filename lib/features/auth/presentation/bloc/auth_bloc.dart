@@ -1,3 +1,4 @@
+import 'package:carrinho_cheio/core/events/ui_event.dart';
 import 'package:carrinho_cheio/features/auth/domain/entities/user_entity.dart';
 import 'package:carrinho_cheio/features/auth/presentation/bloc/auth_status_enum.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,6 +13,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }) : super(AuthState.initial()) {
     on<LoginEvent>(_onLoginEvent);
     on<RegisterUserEvent>(_onRegisterUserEvent);
+    on<ClearAuthUIEvent>(_onClearUI);
   }
 
   final AuthRepository _authRepository;
@@ -42,10 +44,25 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(
         AuthState(
           status: AuthStatus.error,
-          message: e.toString(),
+          uiEvent: UiEvent(
+            type: UiEventType.error,
+            message: e.toString(),
+          ),
         ),
       );
     }
+  }
+
+  Future<void> _onClearUI(
+    ClearAuthUIEvent event,
+    Emitter<AuthState> emit,
+  ) async {
+    emit(
+      state.copyWith(
+        clearUiEvent: true,
+        uiEvent: null,
+      ),
+    );
   }
 
   Future<void> _onRegisterUserEvent(
@@ -75,7 +92,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(
         AuthState(
           status: AuthStatus.error,
-          message: e.toString(),
+          uiEvent: UiEvent(
+            type: UiEventType.error,
+            message: e.toString(),
+          ),
         ),
       );
     }

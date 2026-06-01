@@ -1,5 +1,5 @@
 import 'package:carrinho_cheio/core/models/api_message_model.dart';
-
+import 'package:carrinho_cheio/features/lists/domain/entities/category_entity.dart';
 import '../../domain/entities/list_entity.dart';
 import '../../domain/repositories/lists_repository.dart';
 import '../datasources/lists_datasource.dart';
@@ -32,10 +32,12 @@ class ListsRepositoryImpl implements ListsRepository {
   Future<ApiMessageModel> addProduct({
     required int listId,
     required String productName,
+    required int categoryId,
   }) {
     return _datasource.addProduct(
       listId: listId,
       productName: productName,
+      categoryId: categoryId,
     );
   }
 
@@ -57,5 +59,10 @@ class ListsRepositoryImpl implements ListsRepository {
       productName: productName,
       isChecked: isChecked,
     );
+  }
+
+  @override
+  Future<List<CategoryEntity>> getCategories() {
+    return _datasource.getCategories();
   }
 }

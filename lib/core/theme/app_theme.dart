@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'app_colors.dart';
 
 class AppTheme {
@@ -7,157 +6,99 @@ class AppTheme {
 
   static const String _fontFamily = 'Montserrat';
 
-  static final TextTheme _lightTextTheme = TextTheme(
-    displayLarge: GoogleFonts.montserrat(
-      fontSize: 32,
-      fontWeight: FontWeight.bold,
-      color: AppColors.black,
-    ),
-    displayMedium: GoogleFonts.montserrat(
-      fontSize: 28,
-      fontWeight: FontWeight.bold,
-      color: AppColors.black,
-    ),
-    displaySmall: GoogleFonts.montserrat(
-      fontSize: 24,
-      fontWeight: FontWeight.bold,
-      color: AppColors.black,
-    ),
-    headlineMedium: GoogleFonts.montserrat(
-      fontSize: 20,
-      fontWeight: FontWeight.w600,
-      color: AppColors.black,
-    ),
-    headlineSmall: GoogleFonts.montserrat(
-      fontSize: 18,
-      fontWeight: FontWeight.w600,
-      color: AppColors.black,
-    ),
-    titleLarge: GoogleFonts.montserrat(
-      fontSize: 16,
-      fontWeight: FontWeight.w600,
-      color: AppColors.black,
-    ),
-    titleMedium: GoogleFonts.montserrat(
-      fontSize: 14,
-      fontWeight: FontWeight.w500,
-      color: AppColors.black,
-    ),
-    titleSmall: GoogleFonts.montserrat(
-      fontSize: 12,
-      fontWeight: FontWeight.w500,
-      color: AppColors.black,
-    ),
-    bodyLarge: GoogleFonts.montserrat(
-      fontSize: 16,
-      fontWeight: FontWeight.normal,
-      color: AppColors.black,
-    ),
-    bodyMedium: GoogleFonts.montserrat(
-      fontSize: 14,
-      fontWeight: FontWeight.normal,
-      color: AppColors.black,
-    ),
-    bodySmall: GoogleFonts.montserrat(
-      fontSize: 12,
-      fontWeight: FontWeight.normal,
-      color: AppColors.black,
-    ),
-    labelLarge: GoogleFonts.montserrat(
-      fontSize: 14,
-      fontWeight: FontWeight.w500,
-      color: AppColors.black,
-    ),
-    labelMedium: GoogleFonts.montserrat(
-      fontSize: 12,
-      fontWeight: FontWeight.w500,
-      color: AppColors.black,
-    ),
-    labelSmall: GoogleFonts.montserrat(
-      fontSize: 10,
-      fontWeight: FontWeight.w500,
-      color: AppColors.black,
-    ),
-  );
+  static TextStyle _textStyle({
+    required double size,
+    required FontWeight weight,
+    required Color color,
+  }) {
+    return TextStyle(
+      fontFamily: _fontFamily,
+      fontSize: size,
+      fontWeight: weight,
+      color: color,
+    );
+  }
 
-  static final TextTheme _darkTextTheme = TextTheme(
-    displayLarge: GoogleFonts.montserrat(
-      fontSize: 32,
-      fontWeight: FontWeight.bold,
-      color: Colors.white,
-    ),
-    displayMedium: GoogleFonts.montserrat(
-      fontSize: 28,
-      fontWeight: FontWeight.bold,
-      color: Colors.white,
-    ),
-    displaySmall: GoogleFonts.montserrat(
-      fontSize: 24,
-      fontWeight: FontWeight.bold,
-      color: Colors.white,
-    ),
-    headlineMedium: GoogleFonts.montserrat(
-      fontSize: 20,
-      fontWeight: FontWeight.w600,
-      color: Colors.white,
-    ),
-    headlineSmall: GoogleFonts.montserrat(
-      fontSize: 18,
-      fontWeight: FontWeight.w600,
-      color: Colors.white,
-    ),
-    titleLarge: GoogleFonts.montserrat(
-      fontSize: 16,
-      fontWeight: FontWeight.w600,
-      color: Colors.white,
-    ),
-    titleMedium: GoogleFonts.montserrat(
-      fontSize: 14,
-      fontWeight: FontWeight.w500,
-      color: Colors.white,
-    ),
-    titleSmall: GoogleFonts.montserrat(
-      fontSize: 12,
-      fontWeight: FontWeight.w500,
-      color: Colors.white,
-    ),
-    bodyLarge: GoogleFonts.montserrat(
-      fontSize: 16,
-      fontWeight: FontWeight.normal,
-      color: Colors.white,
-    ),
-    bodyMedium: GoogleFonts.montserrat(
-      fontSize: 14,
-      fontWeight: FontWeight.normal,
-      color: Colors.white,
-    ),
-    bodySmall: GoogleFonts.montserrat(
-      fontSize: 12,
-      fontWeight: FontWeight.normal,
-      color: Colors.white,
-    ),
-    labelLarge: GoogleFonts.montserrat(
-      fontSize: 14,
-      fontWeight: FontWeight.w500,
-      color: Colors.white,
-    ),
-    labelMedium: GoogleFonts.montserrat(
-      fontSize: 12,
-      fontWeight: FontWeight.w500,
-      color: Colors.white,
-    ),
-    labelSmall: GoogleFonts.montserrat(
-      fontSize: 10,
-      fontWeight: FontWeight.w500,
-      color: Colors.white,
-    ),
-  );
+  static TextTheme _buildTextTheme(Color color) {
+    return TextTheme(
+      displayLarge: _textStyle(
+        size: 32,
+        weight: FontWeight.w700,
+        color: color,
+      ),
+      displayMedium: _textStyle(
+        size: 28,
+        weight: FontWeight.w700,
+        color: color,
+      ),
+      displaySmall: _textStyle(
+        size: 24,
+        weight: FontWeight.w700,
+        color: color,
+      ),
+      headlineMedium: _textStyle(
+        size: 20,
+        weight: FontWeight.w600,
+        color: color,
+      ),
+      headlineSmall: _textStyle(
+        size: 18,
+        weight: FontWeight.w600,
+        color: color,
+      ),
+      titleLarge: _textStyle(
+        size: 16,
+        weight: FontWeight.w600,
+        color: color,
+      ),
+      titleMedium: _textStyle(
+        size: 14,
+        weight: FontWeight.w500,
+        color: color,
+      ),
+      titleSmall: _textStyle(
+        size: 12,
+        weight: FontWeight.w500,
+        color: color,
+      ),
+      bodyLarge: _textStyle(
+        size: 16,
+        weight: FontWeight.w400,
+        color: color,
+      ),
+      bodyMedium: _textStyle(
+        size: 14,
+        weight: FontWeight.w400,
+        color: color,
+      ),
+      bodySmall: _textStyle(
+        size: 12,
+        weight: FontWeight.w400,
+        color: color,
+      ),
+      labelLarge: _textStyle(
+        size: 14,
+        weight: FontWeight.w500,
+        color: color,
+      ),
+      labelMedium: _textStyle(
+        size: 12,
+        weight: FontWeight.w500,
+        color: color,
+      ),
+      labelSmall: _textStyle(
+        size: 10,
+        weight: FontWeight.w500,
+        color: color,
+      ),
+    );
+  }
 
   static final ThemeData light = ThemeData(
     useMaterial3: true,
     brightness: Brightness.light,
-    textTheme: _lightTextTheme,
     fontFamily: _fontFamily,
+    textTheme: _buildTextTheme(AppColors.black),
 
     colorScheme: const ColorScheme.light(
       primary: AppColors.primary,
@@ -170,47 +111,45 @@ class AppTheme {
     canvasColor: AppColors.backgroundLight,
     cardColor: AppColors.white,
 
-    appBarTheme: AppBarTheme(
+    appBarTheme: const AppBarTheme(
       backgroundColor: AppColors.primary,
-      foregroundColor: Colors.white,
+      foregroundColor: AppColors.white,
       centerTitle: true,
-      titleTextStyle: GoogleFonts.montserrat(
+      titleTextStyle: TextStyle(
+        fontFamily: _fontFamily,
         fontSize: 20,
         fontWeight: FontWeight.w600,
-        color: Colors.white,
+        color: AppColors.white,
       ),
     ),
 
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       backgroundColor: AppColors.primary,
-      foregroundColor: Colors.white,
+      foregroundColor: AppColors.white,
     ),
 
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
-        textStyle: GoogleFonts.montserrat(
+        foregroundColor: AppColors.white,
+        textStyle: const TextStyle(
+          fontFamily: _fontFamily,
           fontSize: 14,
           fontWeight: FontWeight.w600,
         ),
       ),
     ),
 
-    checkboxTheme: CheckboxThemeData(
-      fillColor: WidgetStateProperty.all(AppColors.primary),
-    ),
-
-    inputDecorationTheme: InputDecorationTheme(
-      labelStyle: GoogleFonts.montserrat(
+    inputDecorationTheme: const InputDecorationTheme(
+      labelStyle: TextStyle(
+        fontFamily: _fontFamily,
         fontSize: 14,
-        fontWeight: FontWeight.normal,
         color: AppColors.black,
       ),
-      hintStyle: GoogleFonts.montserrat(
+      hintStyle: TextStyle(
+        fontFamily: _fontFamily,
         fontSize: 14,
-        fontWeight: FontWeight.normal,
-        color: Colors.grey,
+        color: AppColors.grey,
       ),
     ),
   );
@@ -218,61 +157,59 @@ class AppTheme {
   static final ThemeData dark = ThemeData(
     useMaterial3: true,
     brightness: Brightness.dark,
-    textTheme: _darkTextTheme,
     fontFamily: _fontFamily,
+    textTheme: _buildTextTheme(AppColors.white),
 
     colorScheme: const ColorScheme.dark(
       primary: AppColors.primary,
-      secondary: AppColors.primaryDark,
+      secondary: AppColors.cardDark,
       surface: AppColors.backgroundDark,
       error: AppColors.white,
     ),
 
     scaffoldBackgroundColor: AppColors.backgroundDark,
     canvasColor: AppColors.backgroundDark,
-    cardColor: AppColors.primaryDark,
+    cardColor: AppColors.cardDark,
 
-    appBarTheme: AppBarTheme(
-      backgroundColor: AppColors.primary,
-      foregroundColor: Colors.white,
+    appBarTheme: const AppBarTheme(
+      backgroundColor: AppColors.cardDark,
+      foregroundColor: AppColors.white,
       centerTitle: true,
-      titleTextStyle: GoogleFonts.montserrat(
+      titleTextStyle: TextStyle(
+        fontFamily: _fontFamily,
         fontSize: 20,
         fontWeight: FontWeight.w600,
-        color: Colors.white,
+        color: AppColors.white,
       ),
     ),
 
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       backgroundColor: AppColors.primary,
-      foregroundColor: Colors.white,
+      foregroundColor: AppColors.white,
     ),
 
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
-        textStyle: GoogleFonts.montserrat(
+        foregroundColor: AppColors.white,
+        textStyle: const TextStyle(
+          fontFamily: _fontFamily,
           fontSize: 14,
           fontWeight: FontWeight.w600,
         ),
       ),
     ),
 
-    checkboxTheme: CheckboxThemeData(
-      fillColor: WidgetStateProperty.all(AppColors.primary),
-    ),
-
-    inputDecorationTheme: InputDecorationTheme(
-      labelStyle: GoogleFonts.montserrat(
+    inputDecorationTheme: const InputDecorationTheme(
+      labelStyle: TextStyle(
+        fontFamily: _fontFamily,
         fontSize: 14,
-        fontWeight: FontWeight.normal,
-        color: Colors.white,
+        color: AppColors.white,
       ),
-      hintStyle: GoogleFonts.montserrat(
+      hintStyle: TextStyle(
+        fontFamily: _fontFamily,
         fontSize: 14,
-        fontWeight: FontWeight.normal,
-        color: Colors.grey,
+        color: AppColors.grey,
       ),
     ),
   );

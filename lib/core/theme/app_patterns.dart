@@ -5,9 +5,9 @@ class AppPatterns {
   AppPatterns._();
   static final List<BoxShadow> boxShadow = [
     BoxShadow(
-      color: AppColors.black.withAlpha(128),
-      blurRadius: 10,
-      offset: Offset(0, 5),
+      color: AppColors.black.withAlpha(60),
+      blurRadius: 2,
+      offset: Offset(2, 3),
     ),
   ];
 }

@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:carrinho_cheio/core/models/api_message_model.dart';
 import 'package:carrinho_cheio/features/lists/data/datasources/lists_datasource.dart';
+import 'package:carrinho_cheio/features/lists/data/models/category_model.dart';
 import 'package:carrinho_cheio/features/lists/data/models/request/add_product_request_model.dart';
 import 'package:carrinho_cheio/features/lists/data/models/request/check_product_request_model.dart';
 import 'package:carrinho_cheio/features/lists/data/models/request/create_list_request_model.dart';
@@ -48,8 +51,13 @@ class ListsDatasourceImpl implements ListsDatasource {
   Future<ApiMessageModel> addProduct({
     required int listId,
     required String productName,
+    required int categoryId,
   }) async {
-    final AddProductRequestModel request = AddProductRequestModel(listId: listId, productName: productName);
+    final AddProductRequestModel request = AddProductRequestModel(
+      listId: listId,
+      productName: productName,
+      categoryId: categoryId,
+    );
 
     final response = await _apiClientDio.post(
       '/AdicionaProdutoLista',
@@ -97,5 +105,27 @@ class ListsDatasourceImpl implements ListsDatasource {
     final List data = response.data['Messages'];
 
     return ApiMessageModel.fromJson(data.first);
+  }
+
+  @override
+  Future<List<CategoryModel>> getCategories() async {
+    final response = await _apiClientDio.get(
+      '/SelecionarCategoriaProdutos',
+    );
+
+    final jsonString = response.data['ValorProdutoCategoria'] as String;
+    final Map<String, dynamic> categoriesMap = jsonDecode(jsonString);
+
+    return categoriesMap.keys
+        .toList()
+        .asMap()
+        .entries
+        .map(
+          (entry) => CategoryModel(
+            id: entry.key + 1,
+            name: entry.value,
+          ),
+        )
+        .toList();
   }
 }

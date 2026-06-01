@@ -12,7 +12,7 @@ class ProductModel extends ProductEntity {
   ) {
     return ProductModel(
       name: json['nome'] ?? '',
-      category: json['categoria'] ?? '',
+      category: json['categoria'] ?? 1,
       isChecked: (json['check'] ?? 2) == 1,
     );
   }

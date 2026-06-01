@@ -1,3 +1,5 @@
+import 'package:carrinho_cheio/core/events/ui_event.dart';
+import 'package:carrinho_cheio/features/lists/domain/entities/category_entity.dart';
 import '../../domain/entities/list_entity.dart';
 import 'lists_status_enum.dart';
 
@@ -5,30 +7,36 @@ class ListsState {
   const ListsState({
     required this.status,
     this.lists,
-    this.message,
+    this.categories,
+    this.uiEvent,
   });
 
   final ListsStatus status;
   final List<ListEntity>? lists;
-  final String? message;
+  final List<CategoryEntity>? categories;
+  final UiEvent? uiEvent;
 
   factory ListsState.initial() {
     return const ListsState(
       status: ListsStatus.initial,
       lists: null,
-      message: null,
+      categories: null,
+      uiEvent: null,
     );
   }
 
   ListsState copyWith({
     ListsStatus? status,
     List<ListEntity>? lists,
-    String? message,
+    List<CategoryEntity>? categories,
+    UiEvent? uiEvent,
+    bool clearUiEvent = false,
   }) {
     return ListsState(
       status: status ?? this.status,
       lists: lists ?? this.lists,
-      message: message ?? this.message,
+      categories: categories ?? this.categories,
+      uiEvent: clearUiEvent ? null : (uiEvent ?? this.uiEvent),
     );
   }
 }

@@ -1,6 +1,8 @@
 enum ListsStatus {
   initial,
-  loading,
+  loadingLists,
+  loadingProductChange,
+  loaded,
   success,
   error,
 }

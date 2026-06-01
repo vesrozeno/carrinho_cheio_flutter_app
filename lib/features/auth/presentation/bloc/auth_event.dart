@@ -21,3 +21,7 @@ class RegisterUserEvent extends AuthEvent {
   final String email;
   final String password;
 }
+
+class ClearAuthUIEvent extends AuthEvent {
+  ClearAuthUIEvent();
+}

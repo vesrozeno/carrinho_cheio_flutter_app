@@ -14,4 +14,20 @@ class ListEntity {
   final int total;
   final String title;
   final List<ProductEntity> products;
+
+  ListEntity copyWith({
+    int? id,
+    int? current,
+    int? total,
+    String? title,
+    List<ProductEntity>? products,
+  }) {
+    return ListEntity(
+      id: id ?? this.id,
+      current: current ?? this.current,
+      total: total ?? this.total,
+      title: title ?? this.title,
+      products: products ?? this.products,
+    );
+  }
 }

@@ -2,7 +2,7 @@ import 'package:carrinho_cheio/core/navigator/app_navigator.dart';
 import 'package:carrinho_cheio/core/widgets/custom_text_field.dart';
 import 'package:carrinho_cheio/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:carrinho_cheio/features/auth/presentation/bloc/auth_event.dart';
-import 'package:carrinho_cheio/features/auth/presentation/pages/auth_page_base.dart';
+import 'package:carrinho_cheio/features/auth/presentation/pages/auth_base_page.dart';
 import 'package:carrinho_cheio/features/auth/presentation/pages/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,12 +21,16 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final FocusNode _emailFocus = FocusNode();
+  final FocusNode _passwordFocus = FocusNode();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
+    _emailFocus.dispose();
+    _passwordFocus.dispose();
     super.dispose();
   }
 
@@ -47,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return AuthPageBase(
+    return AuthBasePage(
       topText: 'Entre com sua conta:',
       buttonText: 'Entrar',
       bottomText: 'Ainda não tem conta?',
@@ -60,6 +64,9 @@ class _LoginPageState extends State<LoginPage> {
             CustomTextField(
               controller: _emailController,
               keyboardType: TextInputType.emailAddress,
+              textInputAction: TextInputAction.next,
+              focusNode: _emailFocus,
+              nextFocusNode: _passwordFocus,
               prefixIcon: Icons.email_outlined,
               labelText: 'E-mail',
               inputFormatters: [LengthLimitingTextInputFormatter(20)],
@@ -69,7 +76,13 @@ class _LoginPageState extends State<LoginPage> {
             ),
             CustomTextField(
               controller: _passwordController,
-              obscureText: true,
+              focusNode: _passwordFocus,
+              textInputAction: TextInputAction.done,
+              onFieldSubmitted: () {
+                FocusScope.of(context).unfocus();
+                _onLoginPressed();
+              },
+              isPassword: true,
               labelText: 'Senha',
               prefixIcon: Icons.password_outlined,
               validator: (value) {

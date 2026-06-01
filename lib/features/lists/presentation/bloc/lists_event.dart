@@ -1,43 +1,53 @@
 abstract class ListsEvent {}
 
-class LoadListsRequested extends ListsEvent {
-  LoadListsRequested();
+class LoadListsEvent extends ListsEvent {
+  LoadListsEvent();
 }
 
-class CreateList extends ListsEvent {
+class LoadCategoriesEvent extends ListsEvent {
+  LoadCategoriesEvent();
+}
+
+class ClearUIEvent extends ListsEvent {
+  ClearUIEvent();
+}
+
+class CreateListEvent extends ListsEvent {
   final String name;
 
-  CreateList({
+  CreateListEvent({
     required this.name,
   });
 }
 
-class AddProduct extends ListsEvent {
+class AddProductEvent extends ListsEvent {
+  final int listId;
+  final String productName;
+  final int categoryId;
+
+  AddProductEvent({
+    required this.listId,
+    required this.productName,
+    required this.categoryId,
+  });
+}
+
+class RemoveProductEvent extends ListsEvent {
   final int listId;
   final String productName;
 
-  AddProduct({
+  RemoveProductEvent({
     required this.listId,
     required this.productName,
   });
 }
 
-class RemoveProduct extends ListsEvent {
-  final int listId;
-  final String productName;
-
-  RemoveProduct({
-    required this.listId,
-    required this.productName,
-  });
-}
-
-class CheckProduct extends ListsEvent {
+class CheckProductEvent extends ListsEvent {
   final int listId;
   final String productName;
   final bool isChecked;
 
-  CheckProduct({
+  CheckProductEvent({
     required this.listId,
     required this.productName,
     required this.isChecked,

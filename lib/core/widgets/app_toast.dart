@@ -37,22 +37,19 @@ class AppToast {
   }) {
     toastification.show(
       alignment: Alignment.bottomCenter,
+      style: ToastificationStyle.flat,
       autoCloseDuration: duration,
       dragToClose: true,
-      closeOnClick: false,
+      closeOnClick: true,
       showProgressBar: false,
       applyBlurEffect: false,
       backgroundColor: type.color,
-      foregroundColor: AppColors.white,
       borderRadius: BorderRadius.circular(16),
-
-      margin: const EdgeInsets.symmetric(horizontal: 16),
-
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
       icon: Icon(
         type.icon,
         color: AppColors.white,
       ),
-
       title: Text(
         message,
         style: const TextStyle(
@@ -60,9 +57,30 @@ class AppToast {
           fontWeight: FontWeight.w600,
         ),
       ),
-
       closeButton: ToastCloseButton(
         showType: CloseButtonShowType.always,
+        buttonBuilder: (context, onClose) {
+          return Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: onClose,
+              borderRadius: BorderRadius.circular(20),
+              splashColor: Colors.white.withValues(alpha: 0.15),
+              highlightColor: Colors.white.withValues(alpha: 0.08),
+              child: const SizedBox(
+                width: 28,
+                height: 28,
+                child: Center(
+                  child: Icon(
+                    Icons.close,
+                    size: 18,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }
