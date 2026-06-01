@@ -2,6 +2,7 @@ import 'package:carrinho_cheio/core/navigator/app_navigator.dart';
 import 'package:carrinho_cheio/core/theme/app_colors.dart';
 import 'package:carrinho_cheio/core/theme/app_patterns.dart';
 import 'package:carrinho_cheio/core/theme/theme_cubit.dart';
+import 'package:carrinho_cheio/core/widgets/app_toast.dart';
 import 'package:carrinho_cheio/core/widgets/custom_elevated_button.dart';
 import 'package:carrinho_cheio/core/widgets/will_pop_scope.dart';
 import 'package:carrinho_cheio/features/auth/presentation/bloc/auth_bloc.dart';
@@ -57,6 +58,7 @@ class _AuthBasePageState extends State<AuthBasePage> {
             AppNavigator.pushAndRemoveUntil(ListsHomePage());
             break;
           case AuthStatus.registered:
+            AppToast.show(type: ToastType.success, message: 'Cadastro realizado com sucesso!');
             AppNavigator.pushAndRemoveUntil(LoginPage());
             break;
           case AuthStatus.error:
