@@ -66,7 +66,9 @@ class _CustomElevatedButtonState extends State<CustomElevatedButton> {
               children: [
                 Icon(widget.prefixIcon),
                 const SizedBox(width: 8),
-                widget.child,
+                Flexible(
+                  child: widget.child,
+                ),
               ],
             )
           : widget.child,

@@ -69,7 +69,7 @@ class _LoginPageState extends State<LoginPage> {
               nextFocusNode: _passwordFocus,
               prefixIcon: Icons.email_outlined,
               labelText: 'E-mail',
-              inputFormatters: [LengthLimitingTextInputFormatter(20)],
+              inputFormatters: [LengthLimitingTextInputFormatter(254)],
               validator: (value) {
                 return Validator.required(errorMessage: 'Insira seu e-mail')(value) ?? Validator.email(errorMessage: 'Insira um email válido')(value);
               },

@@ -38,6 +38,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         AuthState(
           status: AuthStatus.authenticated,
           user: user,
+          uiEvent: UiEvent(
+            type: UiEventType.success,
+            message: 'Login realizado com sucesso!',
+          ),
         ),
       );
     } catch (e) {
@@ -86,6 +90,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         AuthState(
           status: AuthStatus.registered,
           user: user,
+          uiEvent: UiEvent(
+            type: UiEventType.success,
+            message: 'Cadastro realizado com sucesso!',
+          ),
         ),
       );
     } catch (e) {

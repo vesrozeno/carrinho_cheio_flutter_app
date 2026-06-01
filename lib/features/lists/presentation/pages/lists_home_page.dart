@@ -43,7 +43,7 @@ class _ListsHomePageState extends State<ListsHomePage> {
         controller: controller,
         labelText: 'Nome',
         inputFormatters: [
-          LengthLimitingTextInputFormatter(20),
+          LengthLimitingTextInputFormatter(50),
         ],
         validator: (value) {
           return Validator.required(
@@ -77,7 +77,11 @@ class _ListsHomePageState extends State<ListsHomePage> {
         floatingActionButton: CustomElevatedButton(
           onPressed: _openCreateListDialog,
           prefixIcon: Icons.add_circle_outline,
-          child: const Text('Nova lista'),
+          child: const Text(
+            'Nova lista',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
         appBar: CustomAppBar(),
         body: BlocBuilder<ListsBloc, ListsState>(
@@ -130,7 +134,11 @@ class _ErrorView extends StatelessWidget {
             const SizedBox(height: 15),
             CustomElevatedButton(
               onPressed: onRetry,
-              child: const Text('Tentar novamente'),
+              child: const Text(
+                'Tentar novamente',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
           ],
         ),
@@ -157,6 +165,8 @@ class _ContentView extends StatelessWidget {
         children: [
           Text(
             userName.isNotEmpty ? 'Olá, $userName!' : 'Olá!',
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
             style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 20,
@@ -201,6 +211,8 @@ class _ListsView extends StatelessWidget {
       children: [
         const Text(
           'Aqui estão suas listas:',
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
           style: TextStyle(fontSize: 16),
         ),
         const SizedBox(height: 15),
@@ -251,24 +263,31 @@ class _ListCard extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    list.title,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      list.title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
                     ),
-                  ),
-                  Text(
-                    list.total == 0 ? '0 itens' : '${list.current} de ${list.total} itens comprados',
-                    style: const TextStyle(
-                      fontSize: 12,
+                    Text(
+                      list.total == 0 ? '0 itens' : '${list.current} de ${list.total} itens comprados',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 12,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
+              const SizedBox(width: 12),
               const Icon(
                 Icons.arrow_forward_ios,
                 size: 18,

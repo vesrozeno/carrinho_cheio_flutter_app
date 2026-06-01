@@ -60,7 +60,11 @@ class MainApp extends StatelessWidget {
 
                   if (event == null) return;
 
-                  AppToast.showError(message: event.message);
+                  if (event.type == UiEventType.error) {
+                    AppToast.showError(message: event.message);
+                  } else {
+                    AppToast.showSuccess(message: event.message);
+                  }
 
                   context.read<AuthBloc>().add(
                     ClearAuthUIEvent(),

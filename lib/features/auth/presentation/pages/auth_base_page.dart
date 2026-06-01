@@ -2,7 +2,6 @@ import 'package:carrinho_cheio/core/navigator/app_navigator.dart';
 import 'package:carrinho_cheio/core/theme/app_colors.dart';
 import 'package:carrinho_cheio/core/theme/app_patterns.dart';
 import 'package:carrinho_cheio/core/theme/theme_cubit.dart';
-import 'package:carrinho_cheio/core/widgets/app_toast.dart';
 import 'package:carrinho_cheio/core/widgets/custom_elevated_button.dart';
 import 'package:carrinho_cheio/core/widgets/will_pop_scope.dart';
 import 'package:carrinho_cheio/features/auth/presentation/bloc/auth_bloc.dart';
@@ -58,7 +57,6 @@ class _AuthBasePageState extends State<AuthBasePage> {
             AppNavigator.pushAndRemoveUntil(ListsHomePage());
             break;
           case AuthStatus.registered:
-            AppToast.show(type: ToastType.success, message: 'Cadastro realizado com sucesso!');
             AppNavigator.pushAndRemoveUntil(LoginPage());
             break;
           case AuthStatus.error:
@@ -117,6 +115,8 @@ class _AuthBasePageState extends State<AuthBasePage> {
                                           ),
                                           const Text(
                                             "Seu app para listas de compras!",
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
                                             style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 16,
@@ -140,6 +140,8 @@ class _AuthBasePageState extends State<AuthBasePage> {
                                             Text(
                                               widget.topText,
                                               style: const TextStyle(fontSize: 12),
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
                                             ),
                                             widget.mainContext,
                                             CustomElevatedButton(
@@ -153,28 +155,40 @@ class _AuthBasePageState extends State<AuthBasePage> {
                                                         strokeWidth: 2,
                                                       ),
                                                     )
-                                                  : Text(widget.buttonText),
+                                                  : Text(
+                                                      widget.buttonText,
+                                                      maxLines: 1,
+                                                      overflow: TextOverflow.ellipsis,
+                                                    ),
                                             ),
                                             Row(
                                               mainAxisAlignment: MainAxisAlignment.center,
                                               children: [
-                                                Text(
-                                                  widget.bottomText,
-                                                  style: const TextStyle(fontSize: 12),
+                                                Flexible(
+                                                  child: Text(
+                                                    widget.bottomText,
+                                                    style: const TextStyle(fontSize: 12),
+                                                    maxLines: 1,
+                                                    overflow: TextOverflow.ellipsis,
+                                                  ),
                                                 ),
-                                                Material(
-                                                  color: Colors.transparent,
-                                                  borderRadius: BorderRadius.circular(20),
-                                                  child: InkWell(
+                                                Flexible(
+                                                  child: Material(
+                                                    color: Colors.transparent,
                                                     borderRadius: BorderRadius.circular(20),
-                                                    onTap: isLoading ? null : widget.onActionTextPressed,
-                                                    child: Padding(
-                                                      padding: const EdgeInsets.symmetric(horizontal: 5),
-                                                      child: Text(
-                                                        widget.bottomActionText,
-                                                        style: const TextStyle(
-                                                          fontWeight: FontWeight.bold,
-                                                          fontSize: 12,
+                                                    child: InkWell(
+                                                      borderRadius: BorderRadius.circular(20),
+                                                      onTap: isLoading ? null : widget.onActionTextPressed,
+                                                      child: Padding(
+                                                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                                                        child: Text(
+                                                          widget.bottomActionText,
+                                                          maxLines: 1,
+                                                          overflow: TextOverflow.ellipsis,
+                                                          style: const TextStyle(
+                                                            fontWeight: FontWeight.bold,
+                                                            fontSize: 12,
+                                                          ),
                                                         ),
                                                       ),
                                                     ),

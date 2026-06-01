@@ -46,7 +46,7 @@ class _ListDetailsPageState extends State<ListDetailsPage> {
             controller: controller,
             labelText: 'Nome',
             inputFormatters: [
-              LengthLimitingTextInputFormatter(20),
+              LengthLimitingTextInputFormatter(50),
             ],
             validator: (value) {
               return Validator.required(
@@ -82,7 +82,11 @@ class _ListDetailsPageState extends State<ListDetailsPage> {
       floatingActionButton: CustomElevatedButton(
         onPressed: _openAddProductDialog,
         prefixIcon: Icons.add_shopping_cart,
-        child: const Text('Adicionar produto'),
+        child: const Text(
+          'Adicionar produto',
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
       ),
       appBar: CustomAppBar(),
       body: Padding(
@@ -142,7 +146,13 @@ class _BackButton extends StatelessWidget {
                   size: 18,
                 ),
                 SizedBox(width: 10),
-                Text('Voltar à tela principal'),
+                Flexible(
+                  child: Text(
+                    'Voltar à tela principal',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
               ],
             ),
           ),
@@ -201,6 +211,8 @@ class _ListHeader extends StatelessWidget {
       children: [
         Text(
           list.title,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
           style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 24,
@@ -272,58 +284,68 @@ class _ProductTile extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                spacing: 10,
-                children: [
-                  Checkbox(
-                    value: product.isChecked,
-                    checkColor: AppColors.white,
-                    onChanged: isLoading
-                        ? null
-                        : (value) {
-                            context.read<ListsBloc>().add(
-                              CheckProductEvent(
-                                listId: list.id,
-                                productName: product.name,
-                                isChecked: value ?? false,
-                              ),
-                            );
-                          },
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        product.name,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          decoration: product.isChecked ? TextDecoration.lineThrough : null,
-                          fontSize: 15,
-                        ),
-                      ),
-                      Text(
-                        product.category,
-                        style: TextStyle(
-                          decoration: product.isChecked ? TextDecoration.lineThrough : null,
-                          fontSize: 12,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-
-              IconButton(
-                icon: Icon(Icons.delete_outline, color: isLoading ? AppColors.grey : Theme.of(context).textTheme.displayMedium!.color),
-                onPressed: () {
-                  isLoading
-                      ? null
-                      : context.read<ListsBloc>().add(
-                          RemoveProductEvent(
-                            listId: list.id,
-                            productName: product.name,
+              Expanded(
+                child: Row(
+                  children: [
+                    Checkbox(
+                      value: product.isChecked,
+                      checkColor: AppColors.white,
+                      onChanged: isLoading
+                          ? null
+                          : (value) {
+                              context.read<ListsBloc>().add(
+                                CheckProductEvent(
+                                  listId: list.id,
+                                  productName: product.name,
+                                  isChecked: value ?? false,
+                                ),
+                              );
+                            },
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            product.name,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              decoration: product.isChecked ? TextDecoration.lineThrough : null,
+                              fontSize: 15,
+                            ),
                           ),
-                        );
+                          Text(
+                            product.category,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              decoration: product.isChecked ? TextDecoration.lineThrough : null,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              IconButton(
+                icon: Icon(
+                  Icons.delete_outline,
+                  color: isLoading ? AppColors.grey : Theme.of(context).textTheme.displayMedium!.color,
+                ),
+                onPressed: () {
+                  if (!isLoading) {
+                    context.read<ListsBloc>().add(
+                      RemoveProductEvent(
+                        listId: list.id,
+                        productName: product.name,
+                      ),
+                    );
+                  }
                 },
               ),
             ],

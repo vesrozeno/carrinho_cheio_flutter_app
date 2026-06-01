@@ -3,6 +3,7 @@ import 'package:carrinho_cheio/core/widgets/custom_text_field.dart';
 import 'package:carrinho_cheio/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:carrinho_cheio/features/auth/presentation/bloc/auth_event.dart';
 import 'package:carrinho_cheio/features/auth/presentation/pages/auth_base_page.dart';
+import 'package:carrinho_cheio/features/auth/presentation/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -74,7 +75,7 @@ class _RegisterPageState extends State<RegisterPage> {
               textInputAction: TextInputAction.next,
               nextFocusNode: _emailFocus,
               labelText: 'Nome',
-              inputFormatters: [LengthLimitingTextInputFormatter(20)],
+              inputFormatters: [LengthLimitingTextInputFormatter(100)],
               validator: (value) {
                 return Validator.required(errorMessage: 'Insira seu nome')(value);
               },
@@ -87,7 +88,7 @@ class _RegisterPageState extends State<RegisterPage> {
               textInputAction: TextInputAction.next,
               nextFocusNode: _passwordFocus,
               labelText: 'E-mail',
-              inputFormatters: [LengthLimitingTextInputFormatter(20)],
+              inputFormatters: [LengthLimitingTextInputFormatter(254)],
               validator: (value) {
                 return Validator.required(errorMessage: 'Insira seu e-mail')(value) ?? Validator.email(errorMessage: 'Insira um email válido')(value);
               },
@@ -112,7 +113,7 @@ class _RegisterPageState extends State<RegisterPage> {
       ),
       onButtonPressed: _onRegisterPressed,
       onActionTextPressed: () {
-        AppNavigator.pop();
+        AppNavigator.pushAndRemoveUntil(LoginPage());
       },
     );
   }

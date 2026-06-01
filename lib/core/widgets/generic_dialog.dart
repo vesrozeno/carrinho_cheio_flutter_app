@@ -116,7 +116,11 @@ class _GenericDialogState extends State<GenericDialog> {
             onPressed: _handleConfirm,
             isLoading: widget.isLoading,
             prefixIcon: widget.confirmButtonIcon,
-            child: Text(widget.confirmButtonText),
+            child: Text(
+              widget.confirmButtonText,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
         ),
       ],
